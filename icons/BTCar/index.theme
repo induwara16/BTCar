@@ -1,0 +1,11 @@
+[Icon Theme]
+Name=BTCar
+Comment=Icons for BTCar
+Directories=material/scalable
+
+[material/scalable]
+Size=24
+Type=Scalable
+MinSize=1
+MaxSize=256
+Context=Actions

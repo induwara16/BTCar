@@ -2,6 +2,7 @@ name: Build for Linux and Android
 
 on:
   push:
+      branches: ["master"]
       tags: ["v[12].[0-9]+.[0-9]+"]
 
 jobs:

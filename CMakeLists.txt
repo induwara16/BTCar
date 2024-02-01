@@ -57,7 +57,9 @@ set_property(TARGET appBTCar APPEND PROPERTY
 )
 
 add_custom_target(appBTCar_other_files ALL
-    SOURCES inkscape/logo.svg inkscape/logo-android.svg inkscape/drawer.svg .gitignore BTCar_si_LK.ts
+    SOURCES inkscape/logo.svg inkscape/logo-android.svg inkscape/drawer.svg inkscape/inkscape.sh .gitignore BTCar_si_LK.ts
 )
 
-qt_add_translations(appBTCar TS_FILES BTCar_si_LK.ts)
+qt_add_translations(appBTCar
+    TS_FILES BTCar_si_LK.ts
+)

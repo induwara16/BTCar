@@ -48,14 +48,14 @@
      inkscape:snap-center="true"
      inkscape:snap-text-baseline="true"
      inkscape:zoom="0.3535534"
-     inkscape:cx="568.51384"
+     inkscape:cx="567.09962"
      inkscape:cy="649.12401"
      inkscape:window-width="1366"
      inkscape:window-height="696"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer3"
      borderlayer="true"
      inkscape:showpageshadow="true"
      inkscape:deskcolor="#d1d1d1">
@@ -438,7 +438,7 @@
            style="fill:#2c2c2c;stroke-width:25.0681;stroke-linecap:round"
            d="M 23.881929,208.89913 A 25.157477,25.157465 0 0 0 49.039418,234.05659 25.157477,25.157465 0 0 0 74.19689,208.89913 25.157477,25.157465 0 0 0 49.039418,183.74166 25.157477,25.157465 0 0 0 23.881929,208.89913 Z" />
         <rect
-           style="fill:#2c2c2c;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+           style="display:inline;fill:#2c2c2c;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
            id="rect17076"
            width="10.379288"
            height="45.788399"

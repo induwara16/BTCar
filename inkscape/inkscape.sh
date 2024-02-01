@@ -1,8 +1,13 @@
 #!/usr/bin/bash
-scour -i ./logo.svg -o ../images/logo.svg --enable-viewboxing --enable-id-stripping \
-  --enable-comment-stripping --shorten-ids --indent=none
-scour -i ./drawer.svg -o ../images/drawer.svg --enable-viewboxing --enable-id-stripping \
-  --enable-comment-stripping --shorten-ids --indent=none
+
+if ! command -v inkscape &> /dev/null
+then
+    shopt -s expand_aliases
+    alias inkscape="flatpak run org.inkscape.Inkscape"
+fi
+
+scour -i ./logo.svg -o ../images/logo.svg --enable-viewboxing --enable-id-stripping --enable-comment-stripping --shorten-ids --indent=none
+scour -i ./drawer.svg -o ../images/drawer.svg --enable-viewboxing --enable-id-stripping --enable-comment-stripping --shorten-ids --indent=none
 
 mkdir ./tmp
 

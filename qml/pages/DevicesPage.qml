@@ -15,8 +15,8 @@ Page {
         rightItem.onClicked: dp.state = "discovering"
     }
 
-    StackView.onActivated: bluetooth.startDiscovery()
-    StackView.onDeactivated: bluetooth.stopDiscovery()
+    StackView.onActivated: dp.state = "discovering"
+    StackView.onDeactivated: dp.state = "discoveryFinished"
 
     ListModel {
         id: devicesModel
@@ -113,7 +113,7 @@ Page {
         }
 
         function onDiscoveryFinished() {
-            dp.state = "discovered"
+            dp.state = "discoveryFinished"
         }
     }
 
@@ -136,7 +136,7 @@ Page {
             }
         },
         State {
-            name: "discovered"
+            name: "discoveryFinished"
 
             PropertyChanges {
                 target: header

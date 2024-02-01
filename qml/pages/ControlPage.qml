@@ -121,7 +121,7 @@ Page {
 
                     IconLabel {
                         icon.color: com.color
-                        icon.name: type === "rx" ? "download" : "upload"
+                        icon.name: type === "RX" ? "download" : "upload"
                         icon.height: 16
                         rightPadding: -5
                         bottomPadding: -5
@@ -130,7 +130,7 @@ Page {
 
                     Label {
                         id: com
-                        color: type === "rx" ? Universal.color(Universal.Emerald) : Universal.color(Universal.Cyan)
+                        color: type === "RX" ? Universal.color(Universal.Emerald) : Universal.color(Universal.Cyan)
                         text: type.toUpperCase()
                         rightPadding: 10
                         font.pixelSize: 13
@@ -199,11 +199,11 @@ Page {
         }
 
         function onRecieved(data) {
-            log.insert(0, {content: data, type: "rx"})
+            log.insert(0, {content: data, type: "TX"})
         }
 
         function onWritten(data) {
-            log.insert(0, {content: data, type: "tx"})
+            log.insert(0, {content: data, type: "TX"})
         }
     }
 }

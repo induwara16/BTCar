@@ -21,6 +21,13 @@ jobs:
             modules: 'qtconnectivity'
             tools: 'tools_cmake tools_ninja'
         - name: Run qt-cmake
-          run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build'
+          run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build'
         - name: Build
           run: "cd build && $IQTA_TOOLS/Ninja/ninja"
+        - name: Test app
+          run: "chmod +x build/appBTCar && ./build/appBTCar"
+        - name: Upload executable
+          uses: actions/upload-artifact@v4
+          with:
+            name: BTCar
+            path: build/appBTCar

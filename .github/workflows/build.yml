@@ -10,6 +10,7 @@ jobs:
       name: Build Linux
       runs-on: ubuntu-latest
       steps:
+        - uses: actions/checkout@v4
         - name: Install Qt
           uses: jurplel/install-qt-action@v3
           with:
@@ -20,6 +21,6 @@ jobs:
             modules: 'qtconnectivity'
             tools: 'tools_cmake tools_ninja'
         - name: Run qt-cmake
-          run: "mkdir build && $QT_ROOT_DIR/bin/qt-cmake -G Ninja -S $GITHUB_WORKSPACE -B build"
+          run: "mkdir build && $Qt6_DIR/bin/qt-cmake -G Ninja -S ${{github.workspace}} -B build"
         - name: Build
-          run: "cd build && $QT_ROOT_DIR/Tools/Ninja/ninja"
+          run: "cd build && $IQTA_TOOLS/Ninja/ninja"

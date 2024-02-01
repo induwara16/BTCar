@@ -71,6 +71,9 @@ Thumbs.db
 *.dll
 *.exe
 
-android
+android/.gradle
+android/gradle
+android/gradlew
+android/gradle.bat
 CMakeLists.txt.user
 BTCar_si_LK.qm

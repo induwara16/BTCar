@@ -13,7 +13,6 @@ Page {
         anchors.fill: parent
 
         model: ListModel {
-            ListElement {type: qsTr("Appearance"); name: qsTr("Theme"); key: "theme"}
             ListElement {type: qsTr("Lights"); name: qsTr("Lights On"); key: "lightsOn"}
             ListElement {type: qsTr("Lights"); name: qsTr("Lights Off"); key: "lightsOff"}
             ListElement {type: qsTr("Horn"); name: qsTr("Horn On"); key: "hornOn"}

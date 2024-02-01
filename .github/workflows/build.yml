@@ -42,7 +42,7 @@ jobs:
             mkdir icons/hicolor
             mkdir icons/hicolor/256x256
             mkdir icons/hicolor/256x256/apps
-            mv ../../../build/BTCar/images/logo.png icons/hicolor/256x256/apps/BTCar.png
+            mv ../../../images/logo.png icons/hicolor/256x256/apps/BTCar.png
             printf "[Desktop Entry]\nType=Application\nName=BTCar\nComment=Simple but powerful SPP client\nExec=BTCar\nIcon=BTCar\nCategories=Education;\n" >> applications/BTCar.desktop
         - name: Run linuxdeployqt
-          run: linuxdeployqt AppDir/usr/share/applications/BTCar.desktop
+          run: linuxdeployqt AppDir/usr/share/applications/BTCar.desktop -qmake=$Qt6_DIR/bin/qmake

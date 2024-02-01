@@ -8,7 +8,7 @@ on:
 jobs:
   build:
       name: Build Linux
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-20.04
       steps:
         - uses: actions/checkout@v4
         - name: Install Qt
@@ -24,8 +24,25 @@ jobs:
           run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build'
         - name: Build
           run: "cd build && $IQTA_TOOLS/Ninja/ninja"
-        - name: Upload executable
-          uses: actions/upload-artifact@v4
+        - name: Install linuxdeplotqt
+          uses: AnimMouse/setup-appimage@v1
           with:
-            name: BTCar
-            path: build/appBTCar
+            name: linuxdeployqt
+            url: https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+        - name: Create AppDir
+          run: |
+            mkdir AppDir
+            cd AppDir
+            mkdir usr
+            cd usr
+            mkdir bin lib share
+            mv ../../build/appBTCar bin/BTCar
+            cd share
+            mkdir applications icons
+            mkdir icons/hicolor
+            mkdir icons/hicolor/256x256
+            mkdir icons/hicolor/256x256/apps
+            mv ../../../build/BTCar/images/logo.png icons/hicolor/256x256/apps/BTCar.png
+            printf "[Desktop Entry]\nType=Application\nName=BTCar\nComment=Simple but powerful SPP client\nExec=BTCar\nIcon=BTCar\nCategories=Education;\n" >> applications/BTCar.desktop
+        - name Run linuxdeployqt
+          run: linuxdeployqt AppDir/usr/share/applications/BTCar.desktop

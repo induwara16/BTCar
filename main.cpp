@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     app.setOrganizationName("Induwara");
     app.setOrganizationDomain("com.rccsonline.induwara");
     app.setApplicationName("BTCar");
-    app.setApplicationVersion("0.0.1");
+    app.setApplicationVersion("v0.0.1");
 
 #ifdef Q_OS_WINDOWS
     app.setWindowIcon(appIcon);

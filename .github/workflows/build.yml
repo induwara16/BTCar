@@ -44,5 +44,5 @@ jobs:
             mkdir icons/hicolor/256x256/apps
             mv ../../../build/BTCar/images/logo.png icons/hicolor/256x256/apps/BTCar.png
             printf "[Desktop Entry]\nType=Application\nName=BTCar\nComment=Simple but powerful SPP client\nExec=BTCar\nIcon=BTCar\nCategories=Education;\n" >> applications/BTCar.desktop
-        - name Run linuxdeployqt
+        - name: Run linuxdeployqt
           run: linuxdeployqt AppDir/usr/share/applications/BTCar.desktop

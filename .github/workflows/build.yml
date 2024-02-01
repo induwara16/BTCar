@@ -1,8 +1,7 @@
-name: Build for Linux
+name: Build for Linux and Android
 
 on:
   push:
-      branches: ["master"]
       tags: ["v[12].[0-9]+.[0-9]+"]
 
 jobs:
@@ -19,3 +18,7 @@ jobs:
             arch: 'gcc_64'
             modules: 'qtconnectivity'
             tools: 'tools_cmake tools_ninja'
+        - name: Run qt-cmake
+          run: "mkdir build && $QT_ROOT_DIR/bin/qt-cmake -G Ninja -S $GITHUB_WORKSPACE -B build"
+        - name: Build
+          run: "cd build && $QT_ROOT_DIR/Tools/Ninja/ninja"

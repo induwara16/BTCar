@@ -2,93 +2,93 @@ name: Build for Linux and Android
 
 on:
   push:
-      branches: ["android-workflow-test"]
-      tags: ["v[12].[0-9]+.[0-9]+"]
+    branches: ["android-workflow-test"]
+    tags: ["v[12].[0-9]+.[0-9]+"]
 
 jobs:
   build-linux:
-      name: Build Linux AppImage
-      runs-on: ubuntu-20.04
+    name: Build Linux AppImage
+    runs-on: ubuntu-20.04
 
-      steps:
-        - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-        - name: Install Qt
-          uses: jurplel/install-qt-action@v3
-          with:
-            version: '6.6.1'
-            host: 'linux'
-            target: 'desktop'
-            arch: 'gcc_64'
-            modules: 'qtconnectivity'
-            tools: 'tools_cmake tools_ninja'
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.6.1'
+          host: 'linux'
+          target: 'desktop'
+          arch: 'gcc_64'
+          modules: 'qtconnectivity'
+          tools: 'tools_cmake tools_ninja'
 
-        - name: Install Qt deps
-          run: sudo apt-get install -y libxcb-cursor0
+      - name: Install Qt deps
+        run: sudo apt-get install -y libxcb-cursor0
 
-        - name: Install linuxdeplotqt
-          uses: AnimMouse/setup-appimage@v1
-          with:
-            name: linuxdeployqt
-            url: https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+      - name: Install linuxdeplotqt
+        uses: AnimMouse/setup-appimage@v1
+        with:
+          name: linuxdeployqt
+          url: https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
 
-        - name: Build
-          run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build && cd build && $IQTA_TOOLS/Ninja/ninja'
+      - name: Build
+        run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build && cd build && $IQTA_TOOLS/Ninja/ninja'
 
-        - name: Create AppDir
-          run: |
-            mkdir AppDir
-            cd AppDir
-            mkdir usr
-            cd usr
-            mkdir bin lib share
-            mv ../../build/appBTCar bin/BTCar
-            cd share
-            mkdir applications icons
-            mkdir icons/hicolor
-            mkdir icons/hicolor/256x256
-            mkdir icons/hicolor/256x256/apps
-            mv ../../../images/logo.png icons/hicolor/256x256/apps/BTCar.png
-            printf "[Desktop Entry]\nType=Application\nName=BTCar\nComment=Simple app to control Bluetooth RC cars over SPP\nExec=BTCar\nIcon=BTCar\nCategories=Education;\n" >> applications/BTCar.desktop
+      - name: Create AppDir
+        run: |
+          mkdir AppDir
+          cd AppDir
+          mkdir usr
+          cd usr
+          mkdir bin lib share
+          mv ../../build/appBTCar bin/BTCar
+          cd share
+          mkdir applications icons
+          mkdir icons/hicolor
+          mkdir icons/hicolor/256x256
+          mkdir icons/hicolor/256x256/apps
+          mv ../../../images/logo.png icons/hicolor/256x256/apps/BTCar.png
+          printf "[Desktop Entry]\nType=Application\nName=BTCar\nComment=Simple app to control Bluetooth RC cars over SPP\nExec=BTCar\nIcon=BTCar\nCategories=Education;\n" >> applications/BTCar.desktop
 
-        - name: Run linuxdeployqt
-          run: linuxdeployqt AppDir/usr/share/applications/BTCar.desktop -qmake=$Qt6_DIR/bin/qmake -appimage && ls BTCar*.AppImage | xargs -I {} mv {} BTCar-x86_64.AppImage
+      - name: Run linuxdeployqt
+        run: linuxdeployqt AppDir/usr/share/applications/BTCar.desktop -qmake=$Qt6_DIR/bin/qmake -appimage && ls BTCar*.AppImage | xargs -I {} mv {} BTCar-x86_64.AppImage
 
-        - name: Upload artifact
-          uses: actions/upload-artifact@v4
-          with:
-            name: BTCar
-            path: BTCar-x86_64.AppImage
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BTCar
+          path: BTCar-x86_64.AppImage
 
-build-android:
-      name: Build Android APK
-      runs-on: ubuntu-latest
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-        - name: Install Qt
-          uses: jurplel/install-qt-action@v3
-          with:
-            version: '6.6.1'
-            host: 'linux'
-            target: 'android'
-            arch: 'android_arm64_v8a'
-            modules: 'qtconnectivity'
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.6.1'
+          host: 'linux'
+          target: 'android'
+          arch: 'android_arm64_v8a'
+          modules: 'qtconnectivity'
 
-        - name: Install CMake and Ninja
-          run: "sudo apt-get -y ninja-build cmake"
+      - name: Install CMake and Ninja
+        run: "sudo apt-get -y ninja-build cmake"
 
-        - name: Install JDK
-          uses: actions/setup-java@v3
-          with:
-            java-version: '11'
-            distribution: 'temurin'
+      - name: Install JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
 
-        - name: Install Android SDK
-          uses: android-actions/setup-android@v3
-          with:
-            packages: '"ndk;25.1.8937393" "platforms;android-33" "platform-tools" "build-tools;33.0.0"'
+      - name: Install Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: '"ndk;25.1.8937393" "platforms;android-33" "platform-tools" "build-tools;33.0.0"'
 
-        - name: Build
-          run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -G Ninja -S ${{github.workspace}} -B build && cd build && ninja'
+      - name: Build
+        run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -G Ninja -S ${{github.workspace}} -B build && cd build && ninja'

@@ -52,7 +52,7 @@ jobs:
           printf "[Desktop Entry]\nType=Application\nName=BTCar\nComment=Simple app to control Bluetooth RC cars over SPP\nExec=BTCar\nIcon=BTCar\nCategories=Education;\n" >> applications/BTCar.desktop
 
       - name: Run linuxdeployqt
-        run: linuxdeployqt AppDir/usr/share/applications/BTCar.desktop -qmake=$Qt6_DIR/bin/qmake -appimage && ls BTCar*.AppImage | xargs -I {} mv {} BTCar-x86_64.AppImage
+        run: linuxdeployqt AppDir/usr/share/applications/BTCar.desktop -qmake=$Qt6_DIR/bin/qmake -appimage -qmldir=../ && ls BTCar*.AppImage | xargs -I {} mv {} BTCar-x86_64.AppImage
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -86,9 +86,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Install Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          packages: '"ndk;25.1.8937393" "platforms;android-33" "platform-tools" "build-tools;33.0.0"'
+        run: 'sdkmanager "ndk;25.1.8937393" "platforms;android-33" "platform-tools" "build-tools;33.0.0"'
 
       - name: Build
         run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -G Ninja -S ${{github.workspace}} -B build && cd build && ninja'

@@ -32,11 +32,8 @@ jobs:
             name: linuxdeployqt
             url: https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
 
-        - name: Run qt-cmake
-          run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build'
-
         - name: Build
-          run: "cd build && $IQTA_TOOLS/Ninja/ninja"
+          run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build && cd build && $IQTA_TOOLS/Ninja/ninja'
 
         - name: Create AppDir
           run: |
@@ -52,12 +49,18 @@ jobs:
             mkdir icons/hicolor/256x256
             mkdir icons/hicolor/256x256/apps
             mv ../../../images/logo.png icons/hicolor/256x256/apps/BTCar.png
-            printf "[Desktop Entry]\nType=Application\nName=BTCar\nComment=Simple but powerful SPP client\nExec=BTCar\nIcon=BTCar\nCategories=Education;\n" >> applications/BTCar.desktop
+            printf "[Desktop Entry]\nType=Application\nName=BTCar\nComment=Simple app to control Bluetooth RC cars over SPP\nExec=BTCar\nIcon=BTCar\nCategories=Education;\n" >> applications/BTCar.desktop
 
         - name: Run linuxdeployqt
-          run: linuxdeployqt AppDir/usr/share/applications/BTCar.desktop -qmake=$Qt6_DIR/bin/qmake -appimage
+          run: linuxdeployqt AppDir/usr/share/applications/BTCar.desktop -qmake=$Qt6_DIR/bin/qmake -appimage && ls BTCar*.AppImage | xargs -I {} mv {} BTCar-x86_64.AppImage
 
-  build-android:
+        - name: Upload artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: BTCar
+            path: BTCar-x86_64.AppImage
+
+build-android:
       name: Build Android APK
       runs-on: ubuntu-latest
 
@@ -75,3 +78,17 @@ jobs:
 
         - name: Install CMake and Ninja
           run: "sudo apt-get -y ninja-build cmake"
+
+        - name: Install JDK
+          uses: actions/setup-java@v3
+          with:
+            java-version: '11'
+            distribution: 'temurin'
+
+        - name: Install Android SDK
+          uses: android-actions/setup-android@v3
+          with:
+            packages: '"ndk;25.1.8937393" "platforms;android-33" "platform-tools" "build-tools;33.0.0"'
+
+        - name: Build
+          run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -G Ninja -S ${{github.workspace}} -B build && cd build && ninja'

@@ -72,4 +72,6 @@ jobs:
             target: 'android'
             arch: 'android_arm64_v8a'
             modules: 'qtconnectivity'
-            tools: 'tools_cmake tools_ninja'
+
+        - name: Install CMake and Ninja
+          run: "sudo apt-get -y ninja-build cmake"

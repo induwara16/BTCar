@@ -87,6 +87,6 @@ jobs:
       - name: Build
         run: |
           mkdir build
-          $Qt6_DIR/bin/qt-cmake -DQT_HOST_PATH="realpath $Qt6_DIR/../gcc_64" -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build
+          $Qt6_DIR/bin/qt-cmake -DQT_HOST_PATH="$Qt6_DIR/../gcc_64" -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build
           cd build
           $IQTA_TOOLS/CMake/bin/cmake --build .

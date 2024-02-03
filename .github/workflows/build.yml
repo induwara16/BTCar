@@ -34,7 +34,7 @@ jobs:
           $IQTA_TOOLS/CMake/bin/cmake --build .
           $IQTA_TOOLS/CMake/bin/cmake --install .
           cpack -G DEB
-          alien --to-rpm BTCar-0.1-Linux.deb
+          sudo alien --to-rpm BTCar-0.1-Linux.deb
 
       - name: Upload deb file
         uses: actions/upload-artifact@v4
@@ -49,7 +49,6 @@ jobs:
           path: build/BTCar-0.1-Linux.rpm
 
   build-android:
-    if: ${{false}}
     name: Build Android APK
     runs-on: ubuntu-latest
 

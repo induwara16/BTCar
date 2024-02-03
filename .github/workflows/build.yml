@@ -26,12 +26,6 @@ jobs:
       - name: Install Qt deps
         run: sudo apt-get install -y libxcb-cursor0
 
-      - name: Install linuxdeplotqt
-        uses: AnimMouse/setup-appimage@v1
-        with:
-          name: linuxdeployqt
-          url: https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
-
       - name: Build
         run: |
           mkdir build
@@ -45,7 +39,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: BTCar.deb
-          path: BTCar-0.1-Linux.deb
+          path: build/BTCar-0.1-Linux.deb
 
   build-android:
     if: ${{false}}

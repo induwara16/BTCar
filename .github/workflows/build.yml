@@ -33,18 +33,22 @@ jobs:
           url: https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
 
       - name: Build
-        run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build && cd build && $IQTA_TOOLS/Ninja/ninja'
-
-      - name: Run linuxdeployqt
-        run: linuxdeployqt AppDir/BTCar.desktop -qmake=$Qt6_DIR/bin/qmake -appimage -qmldir=qml && ls BTCar*.AppImage | xargs -I {} mv {} BTCar-x86_64.AppImage
+        run: |
+          mkdir build
+          $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -DCMAKE_INSTALL_PREFIX="/tmp/BTCar" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build
+          cd build
+          $IQTA_TOOLS/CMake/bin/cmake --build .
+          $IQTA_TOOLS/CMake/bin/cmake --install .
+          cpack -G DEB
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: BTCar.AppImage
-          path: BTCar-x86_64.AppImage
+          name: BTCar.deb
+          path: BTCar-0.1-Linux.deb
 
   build-android:
+    if: ${{false}}
     name: Build Android APK
     runs-on: ubuntu-latest
 

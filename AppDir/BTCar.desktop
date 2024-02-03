@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=BTCar
-Comment=Simple app to control Bluetooth RC cars over SPP
-Exec=BTCar
-Icon=BTCar
-Categories=Education;

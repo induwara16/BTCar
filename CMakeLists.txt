@@ -57,9 +57,31 @@ set_property(TARGET appBTCar APPEND PROPERTY
 )
 
 add_custom_target(appBTCar_other_files ALL
-    SOURCES inkscape/logo.svg inkscape/logo-android.svg inkscape/drawer.svg inkscape/inkscape.sh .gitignore BTCar_si_LK.ts LICENSE README.md .github/workflows/build.yml AppDir/BTCar.png AppDir/BTCar.desktop
+    SOURCES inkscape/logo.svg inkscape/logo-android.svg inkscape/drawer.svg inkscape/inkscape.sh .gitignore BTCar_si_LK.ts LICENSE README.md .github/workflows/build.yml
 )
 
 qt_add_translations(appBTCar
     TS_FILES BTCar_si_LK.ts
 )
+
+qt_generate_deploy_qml_app_script(
+    TARGET appBTCar
+    OUTPUT_SCRIPT deploy_script
+    NO_UNSUPPORTED_PLATFORM_ERROR
+    NO_TRANSLATIONS
+)
+
+install(SCRIPT ${deploy_script})
+
+set(CPACK_PACKAGE_NAME BTCar)
+set(CPACK_PACKAGE_DESCRIPTION "BTCar is an app designed to control RC cars using the Bluetooth Serial Port Profile (SPP). BTCar currently runs on Android and Linux only, but Windows support will be added soon. BTCar is built on the Qt Quick 6 framework.")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A simple cross platform app to control Bluetooth RC cars over SPP")
+set(CPACK_PACKAGE_VENDOR "Induwara Jayaweera")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
+set(CPACK_VERBATIM_VARIABLES ON)
+set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/BTCar")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Induwara Jayaweera <induwara16@yandex.com>")
+set(CPACK_PACKAGE_HOMEPAGE_URL "https://btcar.rf.gd")
+set(CPACK_PACKAGE_ICON ${CMAKE_CURRENT_SOURCE_DIR}/images/BTCar.png)
+set(CPACK_DEBIAN_PACKAGE_DEPENDS libc6 libstdc++6 libgcc-s1)
+include(CPack)

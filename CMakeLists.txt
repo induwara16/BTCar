@@ -76,7 +76,7 @@ qt_generate_deploy_qml_app_script(
 
 install(SCRIPT ${deploy_script})
 
-set(CPACK_PACKAGE_NAME BTCar)
+set(CPACK_PACKAGE_NAME btcar)
 set(CPACK_PACKAGE_DESCRIPTION "BTCar is an app designed to control RC cars using the Bluetooth Serial Port Profile (SPP). This app currently runs on Android and Linux only, but Windows support will be added soon. Built on the Qt Quick 6 framework.")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A simple cross platform app to control Bluetooth RC cars over SPP")
 set(CPACK_PACKAGE_VENDOR "Induwara Jayaweera")
@@ -85,7 +85,6 @@ set(CPACK_VERBATIM_VARIABLES ON)
 set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/BTCar")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Induwara Jayaweera <induwara16@yandex.com>")
 set(CPACK_PACKAGE_HOMEPAGE_URL "https://btcar.rf.gd")
-set(CPACK_PACKAGE_ICON ${CMAKE_CURRENT_SOURCE_DIR}/images/BTCar.png)
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6, libstdc++6, libgcc-s1")
 set(CPACK_RPM_PACKAGE_REQUIRES "libc6 libstdc++6 libgcc-s1")
 set(CPACK_RPM_PACKAGE_LICENSE "GNU GPL v3.0")

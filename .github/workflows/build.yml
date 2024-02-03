@@ -35,6 +35,7 @@ jobs:
           $IQTA_TOOLS/CMake/bin/cmake --install .
           cpack -G DEB
           sudo alien --to-rpm BTCar-0.1-Linux.deb
+          mv btcar-0.1-2.x86_64.rpm BTCar-0.1-Linux.rpm
 
       - name: Upload deb file
         uses: actions/upload-artifact@v4

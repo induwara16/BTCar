@@ -4,18 +4,6 @@ project(BTCar VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set_property(
-    DIRECTORY
-    APPEND
-    PROPERTY CMAKE_CONFIGURE_DEPENDS
-    inkscape/logo.svg inkscape/logo-android.svg inkscape/drawer.svg inkscape/inkscape.sh
-)
-
-execute_process(
-    COMMAND ./inkscape.sh
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/inkscape
-)
-
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Bluetooth LinguistTools)
 
 qt_standard_project_setup()
@@ -69,7 +57,7 @@ set_property(TARGET appBTCar APPEND PROPERTY
 )
 
 add_custom_target(appBTCar_other_files ALL
-    SOURCES inkscape/logo.svg inkscape/logo-android.svg inkscape/drawer.svg inkscape/inkscape.sh .gitignore BTCar_si_LK.ts LICENSE README.md .github/workflows/build.yml
+    SOURCES inkscape/logo.svg inkscape/logo-android.svg inkscape/drawer.svg inkscape/inkscape.sh .gitignore BTCar_si_LK.ts LICENSE README.md .github/workflows/build.yml AppDir/BTCar.png AppDir/BTCar.desktop
 )
 
 qt_add_translations(appBTCar

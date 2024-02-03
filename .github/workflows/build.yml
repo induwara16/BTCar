@@ -8,7 +8,7 @@ on:
 jobs:
   build-linux-deb:
     name: Build Linux deb and rpm
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +24,7 @@ jobs:
           tools: 'tools_cmake tools_ninja'
 
       - name: Install Qt deps and Alien
-        run: sudo apt-get install -y libxcb-cursor0 alien
+        run: sudo apt-get install -y libxcb-cursor0 rpm
 
       - name: Build
         run: |
@@ -34,8 +34,7 @@ jobs:
           $IQTA_TOOLS/CMake/bin/cmake --build .
           $IQTA_TOOLS/CMake/bin/cmake --install .
           cpack -G DEB
-          sudo alien --to-rpm BTCar-0.1-Linux.deb
-          mv btcar-0.1-2.x86_64.rpm BTCar-0.1-Linux.rpm
+          cpack -G RPM
 
       - name: Upload deb file
         uses: actions/upload-artifact@v4

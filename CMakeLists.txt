@@ -15,6 +15,10 @@ qt_add_executable(appBTCar
 
 set_target_properties(appBTCar PROPERTIES OUTPUT_NAME btcar)
 
+set_property(TARGET appBTCar APPEND PROPERTY
+    QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
+)
+
 qt_add_qml_module(appBTCar
     URI BTCar
     VERSION 1.0
@@ -53,10 +57,6 @@ install(TARGETS appBTCar
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-set_property(TARGET appBTCar APPEND PROPERTY
-    QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
 )
 
 add_custom_target(appBTCar_other_files ALL

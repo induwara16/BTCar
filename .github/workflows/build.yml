@@ -6,8 +6,8 @@ on:
     tags: ["v[12].[0-9]+.[0-9]+"]
 
 jobs:
-  build-linux:
-    name: Build Linux AppImage
+  build-linux-deb:
+    name: Build Linux deb and rpm
     runs-on: ubuntu-20.04
 
     steps:
@@ -23,8 +23,8 @@ jobs:
           modules: 'qtconnectivity'
           tools: 'tools_cmake tools_ninja'
 
-      - name: Install Qt deps
-        run: sudo apt-get install -y libxcb-cursor0
+      - name: Install Qt deps and Alien
+        run: sudo apt-get install -y libxcb-cursor0 alien
 
       - name: Build
         run: |
@@ -34,12 +34,19 @@ jobs:
           $IQTA_TOOLS/CMake/bin/cmake --build .
           $IQTA_TOOLS/CMake/bin/cmake --install .
           cpack -G DEB
+          alien --to-rpm BTCar-0.1-Linux.deb
 
-      - name: Upload artifact
+      - name: Upload deb file
         uses: actions/upload-artifact@v4
         with:
           name: BTCar.deb
           path: build/BTCar-0.1-Linux.deb
+
+      - name: Upload rpm
+        uses: actions/upload-artifact@v4
+        with:
+          name: BTCar.rpm
+          path: build/BTCar-0.1-Linux.rpm
 
   build-android:
     if: ${{false}}
@@ -54,12 +61,19 @@ jobs:
         with:
           version: '6.6.1'
           host: 'linux'
+          target: 'desktop'
+          arch: 'gcc_64'
+          modules: 'qtconnectivity'
+          tools: 'tools_cmake tools_ninja'
+
+      - name: Install Qt for Android
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.6.1'
+          host: 'linux'
           target: 'android'
           arch: 'android_arm64_v8a'
           modules: 'qtconnectivity'
-
-      - name: Install CMake and Ninja
-        run: "sudo apt-get install -y ninja-build cmake"
 
       - name: Install JDK
         uses: actions/setup-java@v3
@@ -71,4 +85,8 @@ jobs:
         run: '/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "ndk;25.1.8937393" "platforms;android-33" "platform-tools" "build-tools;33.0.0"'
 
       - name: Build
-        run: 'mkdir build && $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -G Ninja -S ${{github.workspace}} -B build && cd build && ninja'
+        run: |
+          mkdir build
+          $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build
+          cd build
+          $IQTA_TOOLS/CMake/bin/cmake --build .

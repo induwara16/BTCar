@@ -90,6 +90,7 @@ jobs:
           $IQTA_TOOLS/CMake/bin/cmake --build .
 
       - name: Upload apk
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: btcar-android

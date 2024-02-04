@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.16)
 project(BTCar VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_INSTALL_PREFIX /tmp/induwara/BTCar)
 
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Bluetooth LinguistTools)
 
@@ -14,7 +13,6 @@ qt_add_executable(appBTCar
 )
 
 set_target_properties(appBTCar PROPERTIES OUTPUT_NAME btcar)
-set_target_properties(appBTCar PROPERTIES QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android)
 
 qt_add_qml_module(appBTCar
     URI BTCar
@@ -57,36 +55,46 @@ install(TARGETS appBTCar
 )
 
 add_custom_target(appBTCar_other_files ALL
-    SOURCES inkscape/logo.svg inkscape/logo-android.svg inkscape/drawer.svg inkscape/inkscape.sh .gitignore BTCar_si_LK.ts LICENSE README.md .github/workflows/build.yml linux/BTCar.png linux/BTCar.desktop
+    SOURCES inkscape/logo.svg inkscape/logo-android.svg inkscape/drawer.svg inkscape/inkscape.sh .gitignore BTCar_si_LK.ts LICENSE README.md .github/workflows/build.yml
 )
 
 qt_add_translations(appBTCar
     TS_FILES BTCar_si_LK.ts
 )
 
-qt_generate_deploy_qml_app_script(
-    TARGET appBTCar
-    OUTPUT_SCRIPT deploy_script
-    NO_UNSUPPORTED_PLATFORM_ERROR
-    NO_TRANSLATIONS
-)
+if(ANDROID)
+    set_target_properties(appBTCar PROPERTIES
+        QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
+        QT_ANDROID_MIN_SDK_VERSION 23
+        QT_ANDROID_TARGET_SDK_VERSION 33
+    )
+elseif(LINUX)
+    target_sources(appBTCar_other_files PRIVATE linux/BTCar.png linux/BTCar.desktop)
 
-install(SCRIPT ${deploy_script})
-install(CODE "execute_process(COMMAND ln -s;/opt/BTCar/bin/btcar;btcar WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/linux)")
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/linux/BTCar.desktop DESTINATION "../../usr/share/applications")
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/linux/BTCar.png DESTINATION "../../usr/share/icons/hicolor/256x256/apps")
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/linux/btcar DESTINATION "../../usr/bin")
+    qt_generate_deploy_qml_app_script(
+        TARGET appBTCar
+        OUTPUT_SCRIPT deploy_script
+        NO_UNSUPPORTED_PLATFORM_ERROR
+        NO_TRANSLATIONS
+    )
 
-set(CPACK_PACKAGE_NAME BTCar)
-set(CPACK_PACKAGE_DESCRIPTION "BTCar is an app designed to control RC cars using the Bluetooth Serial Port Profile (SPP). This app currently runs on Android and Linux only, but Windows support will be added soon. Built on the Qt Quick 6 framework.")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A simple cross platform app to control Bluetooth RC cars over SPP")
-set(CPACK_PACKAGE_VENDOR "Induwara Jayaweera")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
-set(CPACK_VERBATIM_VARIABLES ON)
-set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/BTCar")
-set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Induwara Jayaweera <induwara16@yandex.com>")
-set(CPACK_PACKAGE_HOMEPAGE_URL "https://btcar.rf.gd")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6, libstdc++6, libgcc-s1, rfkill")
-set(CPACK_RPM_PACKAGE_REQUIRES "libc6 libstdc++6 libgcc-s1 rfkill")
-set(CPACK_RPM_PACKAGE_LICENSE "GNU GPL v3.0")
-include(CPack)
+    install(SCRIPT ${deploy_script})
+    install(CODE "execute_process(COMMAND ln -s;/opt/BTCar/bin/btcar;btcar WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/linux)")
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/linux/BTCar.desktop DESTINATION "../../usr/share/applications")
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/linux/BTCar.png DESTINATION "../../usr/share/icons/hicolor/256x256/apps")
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/linux/btcar DESTINATION "../../usr/bin")
+
+    set(CPACK_PACKAGE_NAME BTCar)
+    set(CPACK_PACKAGE_DESCRIPTION "BTCar is an app designed to control RC cars using the Bluetooth Serial Port Profile (SPP). This app currently runs on Android and Linux only, but Windows support will be added soon. Built on the Qt Quick 6 framework.")
+    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A simple cross platform app to control Bluetooth RC cars over SPP")
+    set(CPACK_PACKAGE_VENDOR "Induwara Jayaweera")
+    set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
+    set(CPACK_VERBATIM_VARIABLES ON)
+    set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/BTCar")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Induwara Jayaweera <induwara16@yandex.com>")
+    set(CPACK_PACKAGE_HOMEPAGE_URL "https://btcar.rf.gd")
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6, libstdc++6, libgcc-s1, rfkill")
+    set(CPACK_RPM_PACKAGE_REQUIRES "libc6 libstdc++6 libgcc-s1 rfkill")
+    set(CPACK_RPM_PACKAGE_LICENSE "GNU GPL v3.0")
+    include(CPack)
+endif()

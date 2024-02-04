@@ -74,7 +74,8 @@ Thumbs.db
 android/.gradle
 android/gradle
 android/gradlew
-android/gradle.bat
+android/gradlew.bat
+android/gradle.properties
 linux/btcar
 CMakeLists.txt.user
 BTCar_si_LK.qm

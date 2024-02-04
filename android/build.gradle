@@ -34,8 +34,8 @@ android {
      * Changing them manually might break the compilation!
      *******************************************************/
 
-    compileSdkVersion 33
-    buildToolsVersion 33
+    compileSdkVersion androidCompileSdkVersion.toInteger()
+    buildToolsVersion androidBuildToolsVersion
     ndkVersion androidNdkVersion
 
     // Extract native libraries from the APK
@@ -74,8 +74,8 @@ android {
 
     defaultConfig {
         resConfig "en"
-        minSdkVersion 23
-        targetSdkVersion 33
+        minSdkVersion qtMinSdkVersion
+        targetSdkVersion androidCompileSdkVersion.toInteger()
         ndk.abiFilters = qtTargetAbiList.split(",")
     }
 }

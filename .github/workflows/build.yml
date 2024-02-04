@@ -80,7 +80,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Install Android SDK
-        run: '/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "ndk;25.1.8937393" "platforms;android-33" "platform-tools" "build-tools;33.0.0"'
+        run: '/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "ndk;25.1.8937393" "platforms;android-33" "platform-tools;33.0.3" "build-tools;33.0.0"'
 
       - name: Build
         run: |

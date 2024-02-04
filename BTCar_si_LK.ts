@@ -286,90 +286,80 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="qml/pages/SettingsPage.qml" line="18"/>
         <location filename="qml/pages/SettingsPage.qml" line="19"/>
-        <location filename="qml/pages/SettingsPage.qml" line="20"/>
         <source>Horn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="qml/pages/SettingsPage.qml" line="16"/>
         <location filename="qml/pages/SettingsPage.qml" line="17"/>
-        <location filename="qml/pages/SettingsPage.qml" line="18"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/pages/SettingsPage.qml" line="21"/>
+        <location filename="qml/pages/SettingsPage.qml" line="20"/>
         <source>Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/pages/SettingsPage.qml" line="25"/>
+        <location filename="qml/pages/SettingsPage.qml" line="24"/>
         <source>Backward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/pages/SettingsPage.qml" line="23"/>
+        <location filename="qml/pages/SettingsPage.qml" line="22"/>
         <source>Forward Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="qml/pages/SettingsPage.qml" line="16"/>
-        <source>Appearance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="qml/pages/SettingsPage.qml" line="16"/>
-        <source>Theme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="qml/pages/SettingsPage.qml" line="17"/>
         <source>Lights On</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/pages/SettingsPage.qml" line="18"/>
+        <location filename="qml/pages/SettingsPage.qml" line="17"/>
         <source>Lights Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/pages/SettingsPage.qml" line="19"/>
+        <location filename="qml/pages/SettingsPage.qml" line="18"/>
         <source>Horn On</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/pages/SettingsPage.qml" line="20"/>
+        <location filename="qml/pages/SettingsPage.qml" line="19"/>
         <source>Horn Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="qml/pages/SettingsPage.qml" line="20"/>
         <location filename="qml/pages/SettingsPage.qml" line="21"/>
         <location filename="qml/pages/SettingsPage.qml" line="22"/>
         <location filename="qml/pages/SettingsPage.qml" line="23"/>
         <location filename="qml/pages/SettingsPage.qml" line="24"/>
         <location filename="qml/pages/SettingsPage.qml" line="25"/>
         <location filename="qml/pages/SettingsPage.qml" line="26"/>
-        <location filename="qml/pages/SettingsPage.qml" line="27"/>
         <source>Movement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/pages/SettingsPage.qml" line="24"/>
+        <location filename="qml/pages/SettingsPage.qml" line="23"/>
         <source>Forward Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/pages/SettingsPage.qml" line="26"/>
+        <location filename="qml/pages/SettingsPage.qml" line="25"/>
         <source>Backward Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/pages/SettingsPage.qml" line="27"/>
+        <location filename="qml/pages/SettingsPage.qml" line="26"/>
         <source>Backward Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/pages/SettingsPage.qml" line="22"/>
+        <location filename="qml/pages/SettingsPage.qml" line="21"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>

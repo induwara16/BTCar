@@ -80,14 +80,14 @@ jobs:
           distribution: 'temurin'
 
       - name: Install Android SDK
-        run: '/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "ndk;25.1.8937393" "platforms;android-33" "platform-tools;33.0.3" "build-tools;33.0.0"'
+        run: '/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "ndk;25.1.8937393" "platforms;android-33" "platform-tools" "build-tools;33.0.0"'
 
       - name: Build
         run: |
           mkdir build
           $Qt6_DIR/bin/qt-cmake -DQt6LinguistTools_DIR="$Qt6_DIR/../gcc_64/lib/cmake/Qt6LinguistTools" -DQT_HOST_PATH="$Qt6_DIR/../gcc_64" -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build
           cd build
-          $IQTA_TOOLS/CMake/bin/cmake --build .
+          $IQTA_TOOLS/CMake/bin/cmake --build . --target appBTCar_prepare_apk_dir
 
       - name: Upload apk
         if: ${{ always() }}

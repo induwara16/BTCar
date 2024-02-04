@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=BTCar
+Comment=A simple cross platform app to control Bluetooth RC cars over SPP
+Exec=/usr/bin/btcar
+Icon=BTCar
+Terminal=false
+Type=Application
+Encoding=UTF-8
+Categories=Education;Application;

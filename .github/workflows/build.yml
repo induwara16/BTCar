@@ -23,30 +23,29 @@ jobs:
           modules: 'qtconnectivity'
           tools: 'tools_cmake tools_ninja'
 
-      - name: Install Qt deps and Alien
-        run: sudo apt-get install -y libxcb-cursor0 rpm
+      - name: Install rpm
+        run: sudo apt-get install -y rpm
 
       - name: Build
         run: |
           mkdir build
-          $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -DCMAKE_INSTALL_PREFIX="/tmp/BTCar" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build
+          $Qt6_DIR/bin/qt-cmake -DCMAKE_BUILD_TYPE="Release" -DCMAKE_INSTALL_PREFIX="/tmp/induwara/BTCar" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build
           cd build
           $IQTA_TOOLS/CMake/bin/cmake --build .
+
+      - name: Package deb and rpm
+        run: |
+          cd build
           $IQTA_TOOLS/CMake/bin/cmake --install .
-          cpack -G DEB
-          cpack -G RPM
+          $IQTA_TOOLS/CMake/bin/cpack -G "DEB;RPM"
 
-      - name: Upload deb file
+      - name: Upload deb and rpm
         uses: actions/upload-artifact@v4
         with:
-          name: BTCar.deb
-          path: build/BTCar-0.1-Linux.deb
-
-      - name: Upload rpm
-        uses: actions/upload-artifact@v4
-        with:
-          name: BTCar.rpm
-          path: build/BTCar-0.1-Linux.rpm
+          name: btcar-linux
+          path: |
+            build/BTCar-0.1-Linux.deb
+            build/BTCar-0.1-Linux.rpm
 
   build-android:
     name: Build Android APK
@@ -86,6 +85,6 @@ jobs:
       - name: Build
         run: |
           mkdir build
-          $Qt6_DIR/bin/qt-cmake -DQt6LinguistTools_DIR="$Qt6_DIR/../gcc_64/lib/cmake/Qt6LinguistTools" -DQT_HOST_PATH="$Qt6_DIR/../gcc_64" -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build
+          $Qt6_DIR/bin/qt-cmake -DQT_ANDROID_PACKAGE_SOURCE_DIR="${{github.workspace}}/android" -DQt6LinguistTools_DIR="$Qt6_DIR/../gcc_64/lib/cmake/Qt6LinguistTools" -DQT_HOST_PATH="$Qt6_DIR/../gcc_64" -DCMAKE_BUILD_TYPE="Release" -DCMAKE_MAKE_PROGRAM="$IQTA_TOOLS/Ninja/ninja" -G Ninja -S ${{github.workspace}} -B build
           cd build
           $IQTA_TOOLS/CMake/bin/cmake --build .

@@ -75,5 +75,6 @@ android/.gradle
 android/gradle
 android/gradlew
 android/gradle.bat
+linux/btcar
 CMakeLists.txt.user
 BTCar_si_LK.qm

@@ -16,9 +16,12 @@ inkscape ./logo.svg -o ./tmp/favicon-64.png -w 64
 inkscape ./logo.svg -o ./tmp/favicon-128.png -w 128
 inkscape ./logo.svg -o ./tmp/favicon-256.png -w 256
 
+inkscape ./logo.svg -o ../linux/BTCar.png -w 256
+convert -bordercolor transparent -border 20 ../linux/BTCar.png ../linux/BTCar.png
+
 cd ./tmp
 
-convert ./favicon-32.png ./favicon-64.png ./favicon-128.png ./favicon-256.png ./favicon.ico
+convert -bordercolor transparent -border 15 ./favicon-32.png ./favicon-64.png ./favicon-128.png ./favicon-256.png ./favicon.ico
 
 mv ./favicon.ico ../../images/favicon.ico
 

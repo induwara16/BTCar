@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(BTCar VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_INSTALL_PREFIX /tmp/BTCar)
+set(CMAKE_INSTALL_PREFIX /tmp/induwara/BTCar)
 
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Bluetooth LinguistTools)
 
@@ -60,7 +60,7 @@ install(TARGETS appBTCar
 )
 
 add_custom_target(appBTCar_other_files ALL
-    SOURCES inkscape/logo.svg inkscape/logo-android.svg inkscape/drawer.svg inkscape/inkscape.sh .gitignore BTCar_si_LK.ts LICENSE README.md .github/workflows/build.yml
+    SOURCES inkscape/logo.svg inkscape/logo-android.svg inkscape/drawer.svg inkscape/inkscape.sh .gitignore BTCar_si_LK.ts LICENSE README.md .github/workflows/build.yml linux/BTCar.png linux/BTCar.desktop
 )
 
 qt_add_translations(appBTCar
@@ -75,6 +75,10 @@ qt_generate_deploy_qml_app_script(
 )
 
 install(SCRIPT ${deploy_script})
+install(CODE "execute_process(COMMAND ln -s;/opt/BTCar/bin/btcar;btcar WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/linux)")
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/linux/BTCar.desktop DESTINATION "../../usr/share/applications")
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/linux/BTCar.png DESTINATION "../../usr/share/icons/hicolor/256x256/apps")
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/linux/btcar DESTINATION "../../usr/bin")
 
 set(CPACK_PACKAGE_NAME BTCar)
 set(CPACK_PACKAGE_DESCRIPTION "BTCar is an app designed to control RC cars using the Bluetooth Serial Port Profile (SPP). This app currently runs on Android and Linux only, but Windows support will be added soon. Built on the Qt Quick 6 framework.")
@@ -85,7 +89,7 @@ set(CPACK_VERBATIM_VARIABLES ON)
 set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/BTCar")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Induwara Jayaweera <induwara16@yandex.com>")
 set(CPACK_PACKAGE_HOMEPAGE_URL "https://btcar.rf.gd")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6, libstdc++6, libgcc-s1")
-set(CPACK_RPM_PACKAGE_REQUIRES "libc6 libstdc++6 libgcc-s1")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6, libstdc++6, libgcc-s1, rfkill")
+set(CPACK_RPM_PACKAGE_REQUIRES "libc6 libstdc++6 libgcc-s1 rfkill")
 set(CPACK_RPM_PACKAGE_LICENSE "GNU GPL v3.0")
 include(CPack)
